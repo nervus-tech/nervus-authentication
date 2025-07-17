@@ -14,14 +14,14 @@ public class User {
     private Long id;
     private String username;
     private String email;
-    private String password;
+    private String password_hash;
 
     public User() {}
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password_hash = password;
     }
 
     public Long getId() { return id; }
@@ -30,6 +30,6 @@ public class User {
     public void setUsername(String username) { this.username = username; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getPassword_hash() { return password_hash; }
+    public void setPassword_hash(String password_hash) { this.password_hash = password_hash; }
 }
