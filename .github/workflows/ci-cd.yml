@@ -52,7 +52,8 @@ jobs:
         run: |
           cd authentication
           # Initialize schema and data in the PostgreSQL service
-          docker exec postgres psql -U nervus_user -d nervus -c "CREATE SCHEMA IF NOT EXISTS auth;"
+          # The command below is no longer needed as the schema is created by Spring Boot
+          # docker exec postgres psql -U nervus_user -d nervus -c "CREATE SCHEMA IF NOT EXISTS auth;"
           # Run the container with database link
           docker run -d --name test-container -p 8080:8080 --link postgres:postgres -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/nervus nervus-authentication:latest
           sleep 15
