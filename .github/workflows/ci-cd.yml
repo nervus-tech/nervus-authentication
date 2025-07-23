@@ -11,17 +11,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     services:
       postgres:
-        image: postgres:15
-        ports:
-          - 5432:5432
+        image: postgres:latest
         env:
-          POSTGRES_DB: nervus
           POSTGRES_USER: nervus_user
           POSTGRES_PASSWORD: secure_password
+          POSTGRES_DB: nervus
+        ports:
+          - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U nervus_user -d nervus" --health-interval=10s --health-timeout=5s --health-retries=5
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code
@@ -31,7 +35,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'corretto'
 
       - name: Build with Maven
         run: mvn clean install -f authentication/pom.xml
@@ -47,8 +51,11 @@ jobs:
       - name: Test Docker Container
         run: |
           cd authentication
-          docker run -d --name test-container -p 8080:8080 nervus-authentication:latest
-          sleep 10
+          # Initialize schema and data in the PostgreSQL service
+          docker exec postgres psql -U nervus_user -d nervus -c "CREATE SCHEMA IF NOT EXISTS auth;"
+          # Run the container with database link
+          docker run -d --name test-container -p 8080:8080 --link postgres:postgres -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/nervus nervus-authentication:latest
+          sleep 15
           docker exec test-container curl http://localhost:8080/api/users || exit 1
           docker stop test-container
           docker rm test-container
