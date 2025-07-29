@@ -1,6 +1,8 @@
-FROM openjdk:21-jre-slim
+FROM openjdk:21-jdk-slim
 WORKDIR /app
-COPY target/nervus-authentication-0.0.1-SNAPSHOT.jar app.jar
-COPY src/main/resources/data.sql data.sql
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
+COPY .mvn/ .mvn/
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:go-offline
+COPY src ./src
+RUN ./mvnw package -DskipTests
+CMD ["java", "-jar", "target/authentication-0.0.1-SNAPSHOT.jar"]
