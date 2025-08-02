@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   staging:
-    image: ghcr.io/nervus-tech/nervus-authentication:staging  # Replace with your username
+    image: ghcr.io/nervus-tech/nervus-authentication:v1.0.0
     ports:
       - "8100:8080"
     environment:
