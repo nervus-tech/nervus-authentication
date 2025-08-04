@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   authentication:
-    image: ghcr.io/nervus-tech/nervus-authentication:v1.0.0
+    image: ghcr.io/nervus-tech/nervus-authentication:v1.1.0
     ports:
       - "8099:8080"
     environment:
@@ -10,7 +10,11 @@ services:
       - SPRING_DATASOURCE_PASSWORD=secure_password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_JPA_SHOW_SQL=true
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA=auth
+      - HIBERNATE_DEFAULT_SCHEMA=local_auth
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka:8761/eureka/
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
+      - EUREKA_CLIENT_FETCH_REGISTRY=true
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
     depends_on:
       - postgres
   postgres:

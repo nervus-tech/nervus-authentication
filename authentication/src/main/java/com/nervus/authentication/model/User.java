@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users", schema = "auth") // Changed from "user" to "users" to avoid reserved keyword
+@Table(name = "users") // Removed hardcoded schema to allow environment variable override
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
