@@ -21,9 +21,6 @@ services:
         limits:
           cpus: "0.5"
           memory: 1G
-    depends_on:
-      - postgres-local
-      - eureka-local
     networks:
       - nervus-local-network
 
