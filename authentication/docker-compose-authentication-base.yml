@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  app:
+    image: ghcr.io/nervus-tech/nervus-authentication:${TAG}
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/nervus
+      - SPRING_DATASOURCE_USERNAME=nervus_user
+      - SPRING_DATASOURCE_PASSWORD=secure_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
+      - EUREKA_CLIENT_FETCH_REGISTRY=true
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 1G
+    networks:
+      - nervus-network

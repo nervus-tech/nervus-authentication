@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  app:
+    extends:
+      file: docker-compose-authentication-base.yml
+      service: app
+    container_name: authentication-staging
+    ports:
+      - "8100:8080"
+    environment:
+      - HIBERNATE_DEFAULT_SCHEMA=staging_auth
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka:8761/eureka/
+      - TAG=v1.1.0-staging
+    networks:
+      - nervus-infrastructure_default
+
+networks:
+  nervus-infrastructure_default:
+    external: true
