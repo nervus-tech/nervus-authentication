@@ -1,2 +1,0 @@
-# nervus-authentication
-Authentication Service

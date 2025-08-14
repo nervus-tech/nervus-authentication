@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  app:
+    extends:
+      file: docker-compose-authentication-base.yml
+      service: app
+    container_name: authentication-local
+    ports:
+      - "8099:8080"
+    environment:
+      - HIBERNATE_DEFAULT_SCHEMA=local_auth
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-local:8761/eureka/
+      - TAG=v1.1.0-local
+    networks:
+      - nervus-local-network
+
+networks:
+  nervus-local-network:
+    external: true

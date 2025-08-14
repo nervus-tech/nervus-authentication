@@ -1,18 +1,13 @@
 version: '3.8'
 services:
-  authentication-staging:
-    image: ghcr.io/nervus-tech/nervus-authentication:v1.1.0-staging
-    container_name: authentication-staging
-    ports:
-      - "8100:8080"
+  app:
+    image: ghcr.io/nervus-tech/nervus-authentication:${TAG}
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/nervus
       - SPRING_DATASOURCE_USERNAME=nervus_user
       - SPRING_DATASOURCE_PASSWORD=secure_password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_JPA_SHOW_SQL=true
-      - HIBERNATE_DEFAULT_SCHEMA=staging_auth
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka:8761/eureka/
       - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
       - EUREKA_CLIENT_FETCH_REGISTRY=true
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
@@ -22,10 +17,4 @@ services:
           cpus: "0.5"
           memory: 1G
     networks:
-      - nervus-infrastructure_default
-    # depends_on removed - expects shared infrastructure Postgres
-  # Postgres service removed - expects shared infrastructure
-
-networks:
-  nervus-infrastructure_default:
-    external: true
+      - nervus-network
