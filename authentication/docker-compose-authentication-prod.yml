@@ -16,8 +16,8 @@ services:
           cpus: "1.5"
           memory: 3G
     networks:
-      - nervus-infrastructure_default
+      - nervus-network
 
 networks:
-  nervus-infrastructure_default:
+  nervus-network:
     external: true

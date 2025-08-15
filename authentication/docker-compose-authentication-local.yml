@@ -11,8 +11,8 @@ services:
       - HIBERNATE_DEFAULT_SCHEMA=local_auth
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-local:8761/eureka/
     networks:
-      - nervus-local-network
+      - nervus-network
 
 networks:
-  nervus-local-network:
+  nervus-network:
     external: true
